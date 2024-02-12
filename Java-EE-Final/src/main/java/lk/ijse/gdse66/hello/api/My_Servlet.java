@@ -180,8 +180,16 @@ public class My_Servlet extends HttpServlet {
             stn.setDouble(3,salary);
             stn.setString(4,id);
 
-            stn.executeUpdate();
-            resp.getWriter().write("print!!");
+
+            if (stn.executeUpdate() != 0) {
+                resp.setStatus(javax.servlet.http.HttpServletResponse.SC_CREATED);
+                resp.getWriter().write("Added customer successfully");
+            }else {
+                resp.sendError(javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to save the customer");
+            }
+
+//            stn.executeUpdate();
+//            resp.getWriter().write("print!!");
 
         } catch (Exception e) {
             e.printStackTrace();
